@@ -1,9 +1,41 @@
 class Game
 
   def initialize(mode, first)
+    @current_player = 1
     @mode = mode
     @first = first
     @state = [['', 'x', ''],['o', '', ''],['', 'o', 'x']]
+  end
+
+  def valid_move?(move)
+    return false if move.length != 2
+    letter = move[0]
+    row = move[1].to_i
+    letters_to_cols.keys.include?(letter.to_sym) && row > 0 && row < 4 && empty?(move)
+  end
+
+  def move_to_num(move)
+    col = letters_to_cols[move[0].to_sym]
+    row = move[1].to_i - 1
+    return row, col
+  end
+
+  def empty?(move)
+    row, col = move_to_num(move)
+    @state[row][col] == ''
+  end
+
+  def make_move(move)
+    row, col = move_to_num(move)
+    piece = ''
+    if @current_player == 1
+      piece = 'x'
+      @current_player = 2
+    else
+      piece = 'o'
+      @current_player = 1
+    end
+    @state[row][col] = piece
   end
 
   def finished?
@@ -73,6 +105,10 @@ class Game
   end
 
   private
+
+  def letters_to_cols
+    { 'A': 0, 'B': 1, 'C': 2 }
+  end
 
   def all_the_same?(array)
     array.uniq.length == 1

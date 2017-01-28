@@ -31,12 +31,30 @@ end
 
 game = Game.new(mode, first)
 
+
+current_player = 1
+
 while !game.finished?
-  game.print_state
-  sleep(2)
+
+  if (first && current_player == 1) || (!first && current_player == 2)
+    game.print_state
+    puts "Please make a move. Use the grid to guide you, valid moves are 'LetterNumber' (e.g. A1)"
+    move = gets.chomp.to_s
+    if game.valid_move?(move)
+      game.make_move(move)
+    else
+      while !game.valid_move?(move)
+        puts "Invalid move, please try again."
+        move = gets.chomp.to_s
+      end
+      game.make_move(move)
+    end
+  end
+
+    sleep(2)
 end
 
-
+game.print_state
 # Output outcome
 puts "****************\n\n  "
 if game.tie?
