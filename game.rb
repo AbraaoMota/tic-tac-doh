@@ -9,13 +9,19 @@ class Game
 
   def valid_move?(move)
     return false if move.length != 2
-    letter = move[0]
+    letter = move[0].downcase
     row = move[1].to_i
     letters_to_cols.keys.include?(letter.to_sym) && row > 0 && row < 4 && empty?(move)
   end
 
+  def winner
+    if finished? && !tie?
+      @current_player == 1 ? 2 : 1
+    end
+  end
+
   def move_to_num(move)
-    col = letters_to_cols[move[0].to_sym]
+    col = letters_to_cols[move[0].downcase.to_sym]
     row = move[1].to_i - 1
     return row, col
   end
@@ -44,14 +50,14 @@ class Game
 
   def vertical_win?
     @state.transpose.each do |column|
-      return true if all_the_same?(column)
+      return true if all_the_same?(column) && !all_blank?(column)
     end
     false
   end
 
   def horizontal_win?
     @state.each do |row|
-      return true if all_the_same?(row)
+      return true if all_the_same?(row) && !all_blank?(column)
     end
     false
   end
@@ -62,25 +68,25 @@ class Game
     diag2 = []
     for i in 0..grid_size-1
       diag1 << @state[i][i]
-      diag2 << @state[grid_size-1-i][grid_size-1-i]
+      diag2 << @state[i][grid_size-1-i]
     end
-    all_the_same?(diag1) || all_the_same?(diag2)
+    (all_the_same?(diag1) && !all_blank?(diag1)) || (all_the_same?(diag2) && !all_blank?(diag2))
   end
 
   def tie?
-    board_full? && !vertical_win? && horizontal_win? && !diagonal_win?
+    board_full? && !vertical_win? && !horizontal_win? && !diagonal_win?
   end
 
   def board_full?
     @state.each do |row|
-      return false if row.include?("")
+      return false if row.include?('')
     end
     true
   end
 
   def board_empty?
     @state.each do |row|
-      return false unless row.all? { |elem| elem == '' }
+      return false unless all_blank?(row)
     end
     true
   end
@@ -104,10 +110,18 @@ class Game
     puts output << "\n\n"
   end
 
+  def current_player
+    @current_player
+  end
+
   private
 
+  def all_blank?(set)
+    set.all? { |elem| elem == '' }
+  end
+
   def letters_to_cols
-    { 'A': 0, 'B': 1, 'C': 2 }
+    { 'a': 0, 'b': 1, 'c': 2 }
   end
 
   def all_the_same?(array)

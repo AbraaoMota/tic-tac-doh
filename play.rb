@@ -11,7 +11,7 @@ puts "(3) Computer vs Computer"
 puts "\nSelect a number:"
 mode = gets.chomp.to_i
 
-if mode > 3 || mode < 0
+if mode > 3 || mode <= 0
   puts "Invalid mode. Quitting..."
   exit
 end
@@ -32,13 +32,13 @@ end
 game = Game.new(mode, first)
 
 
-current_player = 1
-
 while !game.finished?
+  current_player = game.current_player
 
-  if (first && current_player == 1) || (!first && current_player == 2)
+  # Player move (either only mode 1 or mode 2 their move)
+  if (first && current_player == 1) || (!first && current_player == 2) || mode == 1
     game.print_state
-    puts "Please make a move. Use the grid to guide you, valid moves are 'LetterNumber' (e.g. A1)"
+    puts "Player #{current_player}, make a move. Valid moves are 'LetterNumber' (e.g. A1)"
     move = gets.chomp.to_s
     if game.valid_move?(move)
       game.make_move(move)
@@ -51,26 +51,26 @@ while !game.finished?
     end
   end
 
-    sleep(2)
+  # sleep(1.2)
 end
 
 game.print_state
 # Output outcome
-puts "****************\n\n  "
-if game.tie?
-  puts "The game ended in a tie"
-  exit
-end
+puts "  ****************\n"
 winner = game.winner
-if mode == 1
-  puts "Player #{winner} won"
+winner == 1 ? piece = "crosses" : piece = "noughts"
+if winner.nil? && game.tie?
+  puts "  The game ended in a tie...\n"
+elsif mode == 1
+  puts "  Player #{winner} (#{piece}) won! "
 elsif mode == 2
   if ((winner == 1 && first) || (winner == 2 && !first))
-    puts "Congratulations, you somehow broke the game!"
-  elsif winner == '1'
-    puts "Sorry you lost... What did you expect?"
+    puts "  Congratulations, you somehow broke the game!"
+  else
+    puts "  Sorry you lost... What did you expect?"
   end
-else
-  puts "Computer #{winner} won"
+elsif mode == 3
+  puts "Computer #{winner} won!"
 end
+puts "  ****************\n\n  Thanks for playing! \n\n"
 exit
