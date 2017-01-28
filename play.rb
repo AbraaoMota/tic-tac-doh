@@ -2,6 +2,7 @@
 
 require 'pry'
 require_relative "game"
+require_relative "bot"
 
 puts "Welcome to tic-tac-doh"
 puts "What mode would you like to play?"
@@ -54,11 +55,10 @@ while !game.finished?
 
   # Computer move (mode 2 robot move or just mode 3)
   if (mode == 2 && ((first && current_player == 2) || (!first && current_player == 1))) || mode == 3
-    puts "The ai is deciding a move..."
-    ai = Ai.new(game)
+    puts "The computer is deciding a move..."
+    bot = Bot.new(game)
 
-    move = ai.get_best_move
-
+    move = bot.get_best_move
 
     game.make_move(move)
   end

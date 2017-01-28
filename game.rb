@@ -1,5 +1,7 @@
 class Game
 
+  attr_reader :current_player, :state
+
   def initialize(mode, first)
     @current_player = 1
     @mode = mode
@@ -57,7 +59,7 @@ class Game
 
   def horizontal_win?
     @state.each do |row|
-      return true if all_the_same?(row) && !all_blank?(column)
+      return true if all_the_same?(row) && !all_blank?(row)
     end
     false
   end
@@ -110,9 +112,13 @@ class Game
     puts output << "\n\n"
   end
 
-  def current_player
-    @current_player
-  end
+  # def current_player
+  #   @current_player
+  # end
+
+  # def state
+  #   @state
+  # end
 
   private
 
