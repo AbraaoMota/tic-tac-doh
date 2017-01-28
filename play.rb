@@ -16,8 +16,7 @@ if mode > 3 || mode <= 0
   exit
 end
 
-first = false
-if mode < 3
+if mode == 2
   puts "Would you like to play first? (Y/N)"
   first = gets.chomp.to_s
   if first != 'y' && first != 'Y' && first != 'n' && first != 'N'
@@ -26,6 +25,8 @@ if mode < 3
   end
   if first == 'y' || first == 'Y'
     first = true
+  else
+    first = false
   end
 end
 
@@ -34,10 +35,10 @@ game = Game.new(mode, first)
 
 while !game.finished?
   current_player = game.current_player
+  game.print_state
 
   # Player move (either only mode 1 or mode 2 their move)
-  if (first && current_player == 1) || (!first && current_player == 2) || mode == 1
-    game.print_state
+  if mode == 1 || ((first && current_player == 1) || (!first && current_player == 2))
     puts "Player #{current_player}, make a move. Valid moves are 'LetterNumber' (e.g. A1)"
     move = gets.chomp.to_s
     if game.valid_move?(move)
@@ -51,6 +52,16 @@ while !game.finished?
     end
   end
 
+  # Computer move (mode 2 robot move or just mode 3)
+  if (mode == 2 && ((first && current_player == 2) || (!first && current_player == 1))) || mode == 3
+    puts "The ai is deciding a move..."
+    ai = Ai.new(game)
+
+    move = ai.get_best_move
+
+
+    game.make_move(move)
+  end
   # sleep(1.2)
 end
 
