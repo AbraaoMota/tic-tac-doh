@@ -56,11 +56,11 @@ while !game.finished?
   # Computer move (mode 2 robot move or just mode 3)
   if (mode == 2 && ((first && current_player == 2) || (!first && current_player == 1))) || mode == 3
     puts "The computer is deciding a move..."
-    bot = Bot.new(game)
+    bot = Bot.new(game.dup)
 
     move = bot.get_best_move
-
     game.make_move(move)
+    # binding.pry
   end
   # sleep(1.2)
 end

@@ -6,7 +6,7 @@ class Game
     @current_player = 1
     @mode = mode
     @first = first
-    @state = [['', 'x', ''],['o', '', ''],['', 'o', 'x']]
+    @state = [['', '', ''],['', '', ''],['', '', '']]
   end
 
   def valid_move?(move)
