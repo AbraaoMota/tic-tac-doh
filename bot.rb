@@ -9,15 +9,19 @@ class Bot
   def get_best_move
     return "B2" if @game.board_empty?
     move_scores = find_move_scores
-    best_score = -20000
-    best_move = move_scores.keys.first
+    best_score = -1000000
+    best_move = move_scores.keys.sample
+    best_moves = [best_move]
     move_scores.each do |move, score|
       if score > best_score
         best_score = score
         best_move = move
+        best_moves = [best_move]
+      elsif score == best_score
+        best_moves << move
       end
     end
-    best_move
+    best_moves.sample
   end
 
   def find_move_scores(game = @game)
