@@ -24,6 +24,8 @@ class Bot
     best_moves.sample
   end
 
+  private
+
   def find_move_scores(game = @game)
     moves = available_moves(game)
     move_scores = init_move_scores(moves)
@@ -63,8 +65,6 @@ class Bot
     end
     avail_moves
   end
-
-  private
 
   def other_player
     @current_player == 1 ? 2 : 1

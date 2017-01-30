@@ -65,6 +65,7 @@ end
 game.print_state
 # Output outcome
 puts "  ****************\n"
+
 winner = game.winner
 winner == 1 ? piece = "crosses" : piece = "noughts"
 if winner.nil? && game.tie?
