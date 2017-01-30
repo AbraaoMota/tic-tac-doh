@@ -10,7 +10,13 @@ Tic-tac-doh was written in ruby.
 
 ## Installing
 
-To install, make sure you have ruby installed. It was written using ruby 2.3.3p222  . 
+To install, make sure you have ruby installed. It was written using ruby 2.3.3p222. Once you have cloned the repo and installed Ruby, run
+
+```
+bundle install
+```
+
+This installs the (very few) dependencies set out in the Gemfile. 
 
 ## Usage
 
@@ -24,7 +30,13 @@ and follow the on-screen instructions. Have fun!
 
 ## Testing
 
-TODO
+The application is tested in RSpec. To run, type
+
+```
+rspec --format doc
+```
+
+The flags make rspec output test format in a human readible format
 
 ## Bot algorithm
 
