@@ -19,6 +19,8 @@ class Game
   def winner
     if finished? && !tie?
       @current_player == 1 ? 2 : 1
+    else
+      nil
     end
   end
 
