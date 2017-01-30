@@ -11,17 +11,17 @@ puts "(3) Computer vs Computer"
 puts "\nSelect a number:"
 mode = gets.chomp.to_i
 
-if mode > 3 || mode <= 0
+while mode > 3 || mode <= 0
   puts "Invalid mode. Quitting..."
-  exit
+  mode = gets.chomp.to_i
 end
 
 if mode == 2
   puts "Would you like to play first? (Y/N)"
   first = gets.chomp.to_s
-  if first != 'y' && first != 'Y' && first != 'n' && first != 'N'
-    puts "Invalid input. Quitting..."
-    exit
+  while first != 'y' && first != 'Y' && first != 'n' && first != 'N'
+    puts "Invalid input. Try again."
+    first = gets.chomp.to_s
   end
   if first == 'y' || first == 'Y'
     first = true
@@ -78,7 +78,7 @@ elsif mode == 2
     puts "  Sorry you lost... What did you expect?"
   end
 elsif mode == 3
-  puts "Computer #{winner} won!"
+  puts "  Computer #{winner} won!"
 end
 puts "  ****************\n\n  Thanks for playing! \n\n"
 exit
