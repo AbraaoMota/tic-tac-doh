@@ -31,15 +31,14 @@ if mode == 2
   end
 end
 
-game = Game.new(mode, first)
-
+game = Game.new(mode)
 
 while !game.finished?
   current_player = game.current_player
   game.print_state
 
   # Player move (either only mode 1 or mode 2 their move)
-  if mode == 1 || ((first && current_player == 1) || (!first && current_player == 2))
+  if mode == 1 || (!first.nil? && ((first && current_player == 1) || (!first && current_player == 2)))
     puts "Player #{current_player}, make a move. Valid moves are 'LetterNumber' (e.g. A1)"
     move = gets.chomp.to_s
     if game.valid_move?(move)
@@ -54,15 +53,14 @@ while !game.finished?
   end
 
   # Computer move (mode 2 robot move or just mode 3)
-  if (mode == 2 && ((first && current_player == 2) || (!first && current_player == 1))) || mode == 3
-    puts "The computer is deciding a move..."
+  if mode == 3 || (!first.nil? && ((first && current_player == 2) || (!first && current_player == 1)))
+    puts "The computer (player #{current_player}) is deciding a move...\n\n"
     bot = Bot.new(game.dup)
-
     move = bot.get_best_move
+    # Make `thinking` time long enough when just 2 bots are playing
+    mode == 3 ? sleep(1.5) : sleep(1)
     game.make_move(move)
-    # binding.pry
   end
-  # sleep(1.2)
 end
 
 game.print_state

@@ -12,13 +12,11 @@ class Bot
     best_score = -20000
     best_move = move_scores.keys.first
     move_scores.each do |move, score|
-      # binding.pry
       if score > best_score
         best_score = score
         best_move = move
       end
     end
-    # binding.pry
     best_move
   end
 
@@ -28,20 +26,12 @@ class Bot
     moves.each do |move|
       game_duplicate = deep_copy(game)
       game_duplicate.make_move(move)
-
-      # binding.pry
       recursive_find_moves(game_duplicate, 1, move, move_scores)
-      puts "JUST FOUND SCORES FOR THE MOVE #{move}"
-      puts "MOVE SCORES ARE: #{move_scores}"
     end
-    puts "FINAL MOVE SCORES ARE: #{move_scores}"
     move_scores
   end
 
   def recursive_find_moves(game, search_depth, original_move, move_scores)
-    # puts game.print_state
-    # puts move_scores
-
     if game.winner == @current_player
       move_scores[original_move] += score_strength(search_depth)
       return

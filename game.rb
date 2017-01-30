@@ -2,10 +2,11 @@ class Game
 
   attr_reader :current_player, :state
 
-  def initialize(mode, first)
+  # def initialize(mode, first)
+  def initialize(mode)
     @current_player = 1
     @mode = mode
-    @first = first
+    # @first = first
     @state = [['', '', ''],['', '', ''],['', '', '']]
   end
 
