@@ -75,7 +75,7 @@ class Bot
   end
 
   def score_strength(depth)
-    20000 / (depth ** 2)
+    20000 / (depth ** depth)
   end
 
   def init_move_scores(moves)

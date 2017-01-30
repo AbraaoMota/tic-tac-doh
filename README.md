@@ -30,7 +30,7 @@ TODO
 
 The algorithm used by the bots to find their optimal move at any given point looks ahead at every permutation of the game. 
 
-The importance of any given permutation is related to the square of how deep the game has to look to get to that permutation. 
+The importance of any given permutation is related to the exponent of how deep the game has to look to get to that permutation. 
 
 This means that the game values much more permutations of the game that are 1 or 2 moves away than those that are 5-6 moves away from the current state. 
 
