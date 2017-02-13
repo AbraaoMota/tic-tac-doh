@@ -15,6 +15,19 @@ class Game
     letters_to_cols.keys.include?(letter.to_sym) && row > 0 && row < 4 && empty?(move)
   end
 
+  def available_moves
+    available_moves = []
+    cols = ['A', 'B', 'C']
+    @state.each_with_index do |row, r_i|
+      cols.each do |col|
+        move = "#{col}#{r_i + 1}"
+        avail_moves << move if empty?(move)
+      end
+    end
+    available_moves
+  end
+
+
   def winner
     if finished? && !tie?
       @current_player == 1 ? 2 : 1

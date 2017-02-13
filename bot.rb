@@ -27,7 +27,7 @@ class Bot
   private
 
   def find_move_scores(game = @game)
-    moves = available_moves(game)
+    moves = game.available_moves()
     move_scores = init_move_scores(moves)
     moves.each do |move|
       game_duplicate = deep_copy(game)
@@ -46,24 +46,12 @@ class Bot
       return
     end
 
-    opponent_moves = available_moves(game)
+    opponent_moves = game.available_moves()
     opponent_moves.each do |opp_mov|
       game_dup = deep_copy(game)
       game_dup.make_move(opp_mov)
       recursive_find_moves(game_dup, search_depth + 1, original_move, move_scores)
     end
-  end
-
-  def available_moves(game = @game)
-    avail_moves = []
-    cols = ['A', 'B', 'C']
-    @state.each_with_index do |row, r_i|
-      cols.each do |col|
-        move = "#{col}#{r_i + 1}"
-        avail_moves << move if game.empty?(move)
-      end
-    end
-    avail_moves
   end
 
   def other_player
